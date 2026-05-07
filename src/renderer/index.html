@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+  <title>AI Renamer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Title Bar Area -->
+    <div class="titlebar">
+      <div class="titlebar-drag"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="7" fill="url(#grad1)"/>
+          <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="grad1" x1="0" y1="0" x2="28" y2="28">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <h1>AI Renamer</h1>
+      </div>
+      <div class="header-actions">
+        <button id="btn-theme" class="theme-toggle" title="切换主题">
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <button id="btn-settings" class="icon-btn" title="设置">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Drop Zone -->
+      <div id="drop-zone" class="drop-zone">
+        <div class="drop-zone-content">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="drop-icon">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <p class="drop-title">拖放文件或文件夹到此处</p>
+          <p class="drop-subtitle">或者点击下方按钮选择</p>
+          <div class="drop-buttons">
+            <button id="btn-select-folder" class="btn btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              选择文件夹
+            </button>
+            <button id="btn-select-file" class="btn btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              选择文件
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selected Path Display -->
+      <div id="selected-path" class="selected-path hidden">
+        <div class="path-info">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span id="path-text" class="path-text"></span>
+        </div>
+        <button id="btn-change-path" class="btn-text">更改</button>
+      </div>
+
+      <!-- File List -->
+      <div id="file-list-section" class="file-list-section hidden">
+        <div class="section-header">
+          <h3>
+            待处理文件
+            <span id="file-count" class="badge">0</span>
+          </h3>
+          <div class="section-actions">
+            <button id="btn-select-all" class="btn-text">全选</button>
+            <button id="btn-deselect-all" class="btn-text">取消全选</button>
+          </div>
+        </div>
+        <div id="file-list" class="file-list"></div>
+      </div>
+
+      <!-- Quick Settings Bar -->
+      <div id="quick-settings" class="quick-settings hidden">
+        <div class="quick-settings-inner">
+          <div class="quick-item">
+            <label>Provider</label>
+            <select id="qs-provider">
+              <option value="ollama">Ollama</option>
+              <option value="openai">OpenAI</option>
+              <option value="lm-studio">LM Studio</option>
+            </select>
+          </div>
+          <div class="quick-item">
+            <label>Model</label>
+            <div class="model-select-wrapper">
+              <select id="qs-model">
+                <option value="">自动选择</option>
+              </select>
+              <button id="btn-refresh-models" class="icon-btn-sm" title="刷新模型列表">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="quick-item">
+            <label>Case</label>
+            <select id="qs-case">
+              <option value="kebabCase">kebab-case</option>
+              <option value="camelCase">camelCase</option>
+              <option value="pascalCase">PascalCase</option>
+              <option value="snakeCase">snake_case</option>
+              <option value="constantCase">CONSTANT_CASE</option>
+              <option value="dotCase">dot.case</option>
+              <option value="noCase">no case</option>
+              <option value="capitalCase">Capital Case</option>
+              <option value="sentenceCase">Sentence case</option>
+              <option value="trainCase">Train-Case</option>
+              <option value="pascalSnakeCase">Pascal_Snake</option>
+              <option value="pathCase">path/case</option>
+            </select>
+          </div>
+          <div class="quick-item">
+            <label>Language</label>
+            <select id="qs-language">
+              <option value="English">English</option>
+              <option value="Chinese">中文 (Chinese)</option>
+              <option value="Japanese">日本語 (Japanese)</option>
+              <option value="Korean">한국어 (Korean)</option>
+              <option value="French">Français (French)</option>
+              <option value="German">Deutsch (German)</option>
+              <option value="Spanish">Español (Spanish)</option>
+              <option value="Portuguese">Português (Portuguese)</option>
+              <option value="Italian">Italiano (Italian)</option>
+              <option value="Russian">Русский (Russian)</option>
+              <option value="Arabic">العربية (Arabic)</option>
+              <option value="Hindi">हिन्दी (Hindi)</option>
+              <option value="Turkish">Türkçe (Turkish)</option>
+              <option value="Dutch">Nederlands (Dutch)</option>
+              <option value="Polish">Polski (Polish)</option>
+              <option value="Swedish">Svenska (Swedish)</option>
+              <option value="Thai">ไทย (Thai)</option>
+              <option value="Vietnamese">Tiếng Việt (Vietnamese)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Bar -->
+      <div id="action-bar" class="action-bar hidden">
+        <div class="action-bar-left">
+          <span id="selected-count" class="selected-count">已选择 0 个文件</span>
+          <div id="undo-btn-wrapper" class="undo-btn-wrapper hidden">
+            <button id="btn-undo" class="btn btn-secondary" title="撤销上次重命名">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+              撤销
+            </button>
+          </div>
+        </div>
+        <div class="action-bar-right">
+          <button id="btn-start" class="btn btn-primary btn-lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            开始重命名
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress Section -->
+      <div id="progress-section" class="progress-section hidden">
+        <div class="progress-header">
+          <h3>处理进度</h3>
+          <span id="progress-text" class="progress-text">0 / 0</span>
+        </div>
+        <div class="progress-bar-wrapper">
+          <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+        </div>
+        <div id="progress-log" class="progress-log"></div>
+        <div id="progress-summary" class="progress-summary hidden">
+          <div class="summary-item success">
+            <span class="summary-number" id="summary-success">0</span>
+            <span class="summary-label">成功</span>
+          </div>
+          <div class="summary-item failed">
+            <span class="summary-number" id="summary-failed">0</span>
+            <span class="summary-label">失败</span>
+          </div>
+          <div class="summary-item total">
+            <span class="summary-number" id="summary-total">0</span>
+            <span class="summary-label">总计</span>
+          </div>
+        </div>
+        <div id="progress-actions" class="progress-actions hidden">
+          <button id="btn-undo-progress" class="btn btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            撤销重命名
+          </button>
+          <button id="btn-done" class="btn btn-primary">完成</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>设置</h2>
+          <button id="btn-close-settings" class="icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <h3>AI 提供商</h3>
+            <div class="form-group">
+              <label for="s-provider">Provider</label>
+              <select id="s-provider">
+                <option value="ollama">Ollama</option>
+                <option value="openai">OpenAI</option>
+                <option value="lm-studio">LM Studio</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="s-base-url">Base URL</label>
+              <input type="text" id="s-base-url" placeholder="http://127.0.0.1:11434">
+              <small class="form-hint">Ollama 默认: http://127.0.0.1:11434，LM Studio 默认: http://127.0.0.1:1234，OpenAI 默认: https://api.openai.com</small>
+            </div>
+            <div class="form-group" id="api-key-group">
+              <label for="s-api-key">API Key</label>
+              <input type="password" id="s-api-key" placeholder="sk-...">
+              <small class="form-hint">使用 OpenAI 时需要填写 API Key</small>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3>模型设置</h3>
+            <div class="form-group">
+              <label for="s-model">Model</label>
+              <div class="model-select-wrapper">
+                <select id="s-model">
+                  <option value="">自动选择</option>
+                </select>
+                <button id="btn-fetch-models" class="icon-btn-sm" title="获取模型列表">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                  </svg>
+                </button>
+              </div>
+              <small class="form-hint">留空将自动选择最佳可用模型</small>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3>重命名选项</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="s-case">命名风格</label>
+                <select id="s-case">
+                  <option value="kebabCase">kebab-case</option>
+                  <option value="camelCase">camelCase</option>
+                  <option value="pascalCase">PascalCase</option>
+                  <option value="snakeCase">snake_case</option>
+                  <option value="constantCase">CONSTANT_CASE</option>
+                  <option value="dotCase">dot.case</option>
+                  <option value="noCase">no case</option>
+                  <option value="capitalCase">Capital Case</option>
+                  <option value="sentenceCase">Sentence case</option>
+                  <option value="trainCase">Train-Case</option>
+                  <option value="pascalSnakeCase">Pascal_Snake</option>
+                  <option value="pathCase">path/case</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="s-chars">最大字符数</label>
+                <input type="number" id="s-chars" value="20" min="5" max="100">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="s-language">输出语言</label>
+                <select id="s-language">
+                  <option value="English">English</option>
+                  <option value="Chinese">中文 (Chinese)</option>
+                  <option value="Japanese">日本語 (Japanese)</option>
+                  <option value="Korean">한국어 (Korean)</option>
+                  <option value="French">Français (French)</option>
+                  <option value="German">Deutsch (German)</option>
+                  <option value="Spanish">Español (Spanish)</option>
+                  <option value="Portuguese">Português (Portuguese)</option>
+                  <option value="Italian">Italiano (Italian)</option>
+                  <option value="Russian">Русский (Russian)</option>
+                  <option value="Arabic">العربية (Arabic)</option>
+                  <option value="Hindi">हिन्दी (Hindi)</option>
+                  <option value="Turkish">Türkçe (Turkish)</option>
+                  <option value="Dutch">Nederlands (Dutch)</option>
+                  <option value="Polish">Polski (Polish)</option>
+                  <option value="Swedish">Svenska (Swedish)</option>
+                  <option value="Thai">ไทย (Thai)</option>
+                  <option value="Vietnamese">Tiếng Việt (Vietnamese)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="s-frames">视频提取帧数</label>
+                <input type="number" id="s-frames" value="3" min="1" max="30">
+                <small class="form-hint">从视频中提取的关键帧数量</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="s-include-subdirectories">包含子目录</label>
+              <div class="toggle-wrapper">
+                <label class="toggle">
+                  <input type="checkbox" id="s-include-subdirectories">
+                  <span class="toggle-slider"></span>
+                </label>
+                <span id="subdirectories-label" class="toggle-label">否</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="s-custom-prompt">自定义提示词</label>
+              <textarea id="s-custom-prompt" rows="3" placeholder="e.g. Only describe the main subject, ignore background"></textarea>
+              <small class="form-hint">附加到 AI 提示词中的自定义指令</small>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-reset-settings" class="btn btn-secondary">重置</button>
+          <button id="btn-save-settings" class="btn btn-primary">保存设置</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

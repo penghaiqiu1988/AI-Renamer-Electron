@@ -1,0 +1,62 @@
+{
+  "name": "ai-renamer-desktop",
+  "version": "1.0.0",
+  "description": "AI Renamer Desktop - Intelligently rename files using AI models",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "build:dir": "electron-builder --win --dir"
+  },
+  "author": "AI Renamer",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "change-case": "^5.4.4",
+    "pdf-parse": "^1.1.1",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.airenamer.desktop",
+    "productName": "AI Renamer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        },
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "sign": false,
+      "signingHashAlgorithms": []
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "AI Renamer"
+    },
+    "portable": {
+      "artifactName": "AI-Renamer-Portable-${version}.exe"
+    },
+    "asar": true
+  }
+}
