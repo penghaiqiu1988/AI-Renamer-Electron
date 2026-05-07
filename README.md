@@ -15,6 +15,13 @@
 - ⚙️ **自定义提示词** - 可添加自定义 AI 指令
 - ⚙️ **操作管理** - 待处理器的文件添加/删除，处理过程中止，处理完成后撤销重命名，明亮/黑暗模式切换
 
+<img width="946" height="713" alt="ScreenShot_2026-05-07_204211_401" src="https://github.com/user-attachments/assets/60073f01-bb4c-423c-bd28-b74acc48c2cb" />
+<img width="946" height="713" alt="ScreenShot_2026-05-07_204155_849" src="https://github.com/user-attachments/assets/287b53d6-79e6-4ba6-a94c-a9aa7c29a2d9" />
+<img width="946" height="713" alt="FileUploader" src="https://github.com/user-attachments/assets/a7c448c3-252f-4d94-a5ff-88f0a8e2ad23" />
+<img width="946" height="713" alt="ScreenShot_2026-05-07_204117_330" src="https://github.com/user-attachments/assets/2b4a8ec5-bb12-4ee0-abd8-5eb37ff9a559" />
+<img width="944" height="711" alt="ScreenShot_2026-05-07_204102_632" src="https://github.com/user-attachments/assets/56e9bc1f-b878-49d4-8f9a-2b1027550c92" />
+
+
 ## 系统要求
 
 - Windows 10/11 (x64)
