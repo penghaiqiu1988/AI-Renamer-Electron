@@ -1,4 +1,4 @@
-<img width="300" height="300" alt="icon" src="https://github.com/user-attachments/assets/3070d0b7-c25e-4606-b9a7-090afa7c9516" />
+<img width="200" height="200" alt="icon" src="https://github.com/user-attachments/assets/3070d0b7-c25e-4606-b9a7-090afa7c9516" />
 
 # AI Renamer Desktop
 
